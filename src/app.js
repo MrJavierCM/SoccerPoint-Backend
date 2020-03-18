@@ -1,7 +1,14 @@
-const express = require('express');
-const morgan = require('morgan');
+var express = require('express');
+var app = express();
+var morgan = require('morgan');
+var admin = require('firebase-admin');
+var serviceAccount = require('../../soccerpoint-21d24-firebase-adminsdk-no6eb-9ccd718194.json');
 
-const app = express();
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://soccerpoint-21d24.firebaseio.com"
+});
+var db = admin.database();
 
 //settings
 app.set('port', process.env.PORT || 3000);
@@ -13,7 +20,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 //routes
-app.use(require('./routes/index'));
+app.use(require('./routes/pubs'));
 
 //starting the server
 // app.this.listen(app.get('port'), () => {
