@@ -1,5 +1,7 @@
 var express = require('express');
+var cors = require('cors');
 var app = express();
+var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var admin = require('firebase-admin');
 var serviceAccount = require('../../soccerpoint-21d24-firebase-adminsdk-no6eb-9ccd718194.json');
@@ -16,11 +18,13 @@ app.set('json spaces', 2);
 
 //middlewares
 app.use(morgan('dev'));
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(cors());
 
 //routes
 app.use(require('./routes/pubs'));
+app.use(require('./routes/users'));
 
 //starting the server
 // app.this.listen(app.get('port'), () => {

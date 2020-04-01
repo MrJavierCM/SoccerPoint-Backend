@@ -3,11 +3,10 @@ const router = Router();
 const admin = require('firebase-admin');
 const db = admin.database();
 
-router.get('/api/pubs', (req, res)=>{
-    res.json;
+router.post('/api/new-user', (req, res)=>{
+    console.log(req.body);
+    db.ref('users').push(req.body);
+    console.log('Usuario recibido');
 });
 
-router.post('/api/new-pub', (req, res) =>{
-    db.ref('pubs').push(req);
-})
 module.exports = router;
