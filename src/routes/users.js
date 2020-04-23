@@ -3,10 +3,21 @@ const router = Router();
 const admin = require('firebase-admin');
 const db = admin.database();
 
+router.get('/api/users', (req, res) => {
+    var reference = db.ref('/users');
+    reference.on("value", function(snapshot){
+        console.log(snapshot.val());
+        res.json(snapshot.val())
+        reference.off("value")
+     },
+      function(errorObject){
+       res.send("The read failed: " + errorObject.code);
+     })
+   });
+
 router.post('/api/new-user', (req, res)=>{
-    console.log(req.body);
-    db.ref('users').push(req.body);
-    console.log('Usuario recibido');
+  var name = req.body.Nickname;
+  db.ref('users').child(name).set(req.body);;
 });
 
 module.exports = router;
