@@ -69,4 +69,15 @@ router.post('/api/editProfile', (req, res) => {
     res.send(true);
 })
 
+router.post('/api/commentsByPub', (req, res) => {
+  console.log(req.body.Nickname)
+  var reference = firebase.database().ref('pubs');
+  reference.orderByChild('Nickname').equalTo(req.body.Nickname).on('value',function(snapshot){
+    valueJSON = snapshot.toJSON()
+    console.log(valueJSON)
+    res.send(valueJSON.Prueba1.Comments);
+    reference.off("value")
+  })
+})
+
 module.exports = router;
