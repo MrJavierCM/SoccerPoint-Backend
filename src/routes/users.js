@@ -49,4 +49,12 @@ router.post('/api/infoUser', (req, res)=>{
   });
 })
 
-module.exports = router;
+router.post('/api/new-comment', (req, res)=>{
+  var reference = firebase.database().ref('pubs');
+  reference.child(req.body[0]).child('Comments').child(req.body[1].User).set(req.body[1])
+  .then(function(){
+    res.send(true);
+  });
+})
+
+module.exports = router; 
